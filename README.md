@@ -68,7 +68,6 @@ CREATE TABLE asin_optimizations (
 ### 3. Configure Environment Variables
 Create a .env file in the backend folder:
 ```env
-Copy code
 DB_HOST=localhost
 DB_USER=root
 DB_PASSWORD=your_mysql_password
