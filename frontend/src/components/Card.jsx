@@ -1,4 +1,6 @@
-export default function Card({ title, bullets = [], description, label }) {
+export default function Card({ title, bullets = [], description, label, keywords = []}) {
+
+    //const bulletList = Array.isArray(bullets) ? bullets : bullets?.length ? bullets.split("\n") : [];
   return (
     <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6 hover:shadow-xl transition-shadow duration-300">
       <div className="mb-4">
@@ -31,6 +33,19 @@ export default function Card({ title, bullets = [], description, label }) {
           <div>
             <h3 className="text-sm font-semibold text-slate-600 mb-2">Description</h3>
             <p className="text-slate-800 leading-relaxed">{description}</p>
+          </div>
+        )}
+        
+        {keywords && keywords.length > 0 && (
+          <div>
+            <h3 className="text-sm font-semibold text-slate-600 mb-2">Keywords</h3>
+            <div className="flex flex-wrap gap-2">
+              {keywords.map((kw, index) => (
+                <span key={index} className="bg-blue-100 text-blue-800 px-2 py-1 rounded-md text-xs">
+                  {kw}
+                </span>
+              ))}
+            </div>
           </div>
         )}
       </div>

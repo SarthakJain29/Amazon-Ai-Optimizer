@@ -11,21 +11,21 @@ router.post("/", async (req, res) => {
   const { asin, title, bullets, description } = req.body;
   const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
-  if (!asin || !title || !bullets || !description) {
+  if (!asin || !title || !bullets) {
     return res.status(400).json({ error: "Missing required fields" });
   }
-
+  const bulletsArray = Array.isArray(bullets) ? bullets : bullets.split("\n");
   const prompt = `
 You are an Amazon product listing optimization expert.
 Given the following product details:
 - Title: ${title}
-- Bullet Points: ${bullets}
+- Bullet Points: ${bulletsArray.join("\n")}
 - Description: ${description}
 
 Generate:
 1. An improved, keyword-rich, readable title.
 2. 5 rewritten bullet points that are clear and concise.
-3. An enhanced, persuasive but compliant description.
+3. An enhanced, brief, persuasive but compliant description.
 4. 3 to 5 new keyword suggestions.
 
 Give output strictly in valid JSON format only (no markdown, no explanations, no backticks).
@@ -62,16 +62,21 @@ Example:
       [
         asin,
         title,
-        bullets,
+        JSON.stringify(bullets),
         description,
         result.optimized_title,
-        result.optimized_bullets.join("\n"),
+        JSON.stringify(result.optimized_bullets),
         result.optimized_description,
-        result.keywords.join(", "),
+        JSON.stringify(result.keywords),
       ]
     );
 
-    res.json(result);
+    res.json({
+      optimized_title: result.optimized_title,
+      optimized_bullets: result.optimized_bullets,
+      optimized_description: result.optimized_description,
+      keywords: result.keywords
+})
   } catch (error) {
     console.error("Error during optimization:", error.response?.data || error.message || error);
     res.status(500).json({ error: "AI optimization failed" });

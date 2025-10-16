@@ -26,7 +26,7 @@ export default function Home() {
       const result = await fetchAndOptimize(asin);
       setData(result);
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to fetch and optimize product. Please try again.');
+      setError(err.response?.data?.error || 'Failed to fetch and optimize product. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -91,9 +91,10 @@ export default function Home() {
           />
           <Card
             label="Optimized"
-            title={data.optimized.title}
-            bullets={data.optimized.bullets}
-            description={data.optimized.description}
+            title={data.optimized.optimized_title}
+            bullets={data.optimized.optimized_bullets}
+            description={data.optimized.optimized_description}
+            keywords={data.optimized.keywords}
           />
         </div>
       )}

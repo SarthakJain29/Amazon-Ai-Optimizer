@@ -17,15 +17,13 @@ router.get("/:asin", async (req, res) => {
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
       },  //adding headers to avoid getting request blocked by amazon
     });
-
     const $ = cheerio.load(data);
 
     const title = $("#productTitle").text().trim();
     const bullets = $("#feature-bullets li span")
       .map((i, el) => $(el).text().trim())
       .get()
-      .filter(Boolean)
-      .join("\n");
+      .filter(Boolean);
 
     const description = $("#productDescription").text().trim();
 
