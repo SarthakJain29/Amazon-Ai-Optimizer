@@ -36,16 +36,16 @@ export default function Home() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="text-center mb-12 hero-pattern rounded-3xl py-16 px-6">
         <h1 className="text-5xl font-bold text-slate-900 mb-4 tracking-tight">
-          Amazon Product Listing Optimizer
+          AI-Powered Amazon Optimizer
         </h1>
         <p className="text-slate-600 text-xl font-medium max-w-2xl mx-auto">
-          Fetch and enhance your product listings using AI
+          Transform your product listings for maximum impact
         </p>
       </div>
 
       <div className="max-w-xl mx-auto mb-12">
         <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-lg border border-slate-200 p-8">
-          <label htmlFor="asin" className="block text-sm font-bold text-slate-700 mb-3">
+          <label htmlFor="asin" className="block text-lg font-bold text-slate-700 mb-3">
             Enter ASIN
           </label>
           <input
@@ -54,9 +54,21 @@ export default function Home() {
             value={asin}
             onChange={(e) => setAsin(e.target.value)}
             placeholder="e.g., B08N5WRWNW"
-            className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none mb-5 font-medium text-slate-900"
+            className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none mb-3 font-medium text-slate-900"
             disabled={loading}
           />
+
+          {/* Example ASINs */}
+          <div className="mb-5 mt-3 text-base text-slate-700">
+            <p>Example ASINs you can try:</p>
+            <ul className="mt-1 list-disc ml-5">
+              <li>Echo Dot - B09B8XJDW5</li>
+              <li>Fire TV Stick - B0CQN2BHW8</li>
+              <li>Apple AirPods Pro - B0FQFJBBVY</li>
+              <li>Kindle Paperwhite - B0DKTZ6592</li>
+            </ul>
+          </div>
+
           <Button
             type="submit"
             disabled={loading}
