@@ -43,13 +43,11 @@ cd amazon-product-optimizer
 1. Install MySQL server (if not already installed)
 
 2. Create a database:
-```
-sql
+```sql
 CREATE DATABASE product_optimizer;
 ```
 3. Create the table for storing optimizations:
-```
-sql
+```sql
 USE product_optimizer;
 
 CREATE TABLE asin_optimizations (
@@ -69,8 +67,7 @@ CREATE TABLE asin_optimizations (
 
 ### 3. Configure Environment Variables
 Create a .env file in the backend folder:
-```
-env
+```env
 Copy code
 DB_HOST=localhost
 DB_USER=root
@@ -84,32 +81,28 @@ PORT=5000
 
 ### 4. Install Dependencies
 Backend:
-```
-bash
+```bash
 Copy code
 cd backend
 npm install
 ```
 
 Frontend:
-```
-bash
+```bash
 Copy code
 cd ../frontend
 npm install
 ```
 ### 5. Run the Application Locally
 Backend:
-```
-bash
+```bash
 cd backend
 npm run dev
 ```
 Server will start at http://localhost:5000.
 
 Frontend:
-```
-bash
+```bash
 cd frontend
 npm run dev
 ```
