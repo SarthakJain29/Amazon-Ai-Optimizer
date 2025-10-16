@@ -112,3 +112,39 @@ Frontend will start at http://localhost:5173 (default Vite port).
 - Enter an Amazon ASIN to fetch product details.
 - Click Fetch & Optimize to generate optimized listings.
 - View optimization history in the History tab.
+
+## Prompt and Reasoning
+
+The application sends product details to Google Gemini AI using this prompt:
+
+```javascript
+const prompt = `
+You are an Amazon product listing optimization expert.
+Given the following product details:
+- Title: ${title}
+- Bullet Points: ${bulletsArray.join("\n")}
+- Description: ${description}
+
+Generate:
+1. An improved, keyword-rich, readable title.
+2. 5 rewritten bullet points that are clear and concise.
+3. An enhanced, brief, persuasive but compliant description.
+4. 3 to 5 new keyword suggestions.
+
+Give output strictly in valid JSON format only (no markdown, no explanations, no backticks).
+Example:
+{
+  "optimized_title": "...",
+  "optimized_bullets": ["...", "..."],
+  "optimized_description": "...",
+  "keywords": ["...", "..."]
+}
+`;
+```
+
+### Explanation
+- Guides AI to improve Amazon product listings.
+- Generates clear, keyword-rich, and persuasive content.
+- Produces multiple bullet points and keywords for better SEO.
+- Returns valid JSON so the frontend can read it easily.
+- Keeps descriptions short, persuasive, and suitable for Amazon.
