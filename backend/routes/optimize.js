@@ -1,54 +1,59 @@
 import express from "express";
-import OpenAI from "openai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import { db } from "../db.js";
 import dotenv from "dotenv";
 dotenv.config();
 
-
 const router = express.Router();
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 router.post("/", async (req, res) => {
   const { asin, title, bullets, description } = req.body;
-
+  const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
   if (!asin || !title || !bullets || !description) {
     return res.status(400).json({ error: "Missing required fields" });
   }
 
   const prompt = `
-  You are an Amazon product listing optimization expert.
-  Given the following product details:
-  - Title: ${title}
-  - Bullet Points: ${bullets}
-  - Description: ${description}
+You are an Amazon product listing optimization expert.
+Given the following product details:
+- Title: ${title}
+- Bullet Points: ${bullets}
+- Description: ${description}
 
-  Generate:
-  1. An improved, keyword-rich, readable title.
-  2. 5 rewritten bullet points that are clear and concise.
-  3. An enhanced, persuasive but compliant description.
-  4. 3 to 5 new keyword suggestions.
-  Return in JSON format:
-  {
-    "optimized_title": "...",
-    "optimized_bullets": ["...", "..."],
-    "optimized_description": "...",
-    "keywords": ["...", "..."]
-  }
-  `;
+Generate:
+1. An improved, keyword-rich, readable title.
+2. 5 rewritten bullet points that are clear and concise.
+3. An enhanced, persuasive but compliant description.
+4. 3 to 5 new keyword suggestions.
+
+Give output strictly in valid JSON format only (no markdown, no explanations, no backticks).
+Example:
+{
+  "optimized_title": "...",
+  "optimized_bullets": ["...", "..."],
+  "optimized_description": "...",
+  "keywords": ["...", "..."]
+}
+`;
 
   try {
-    const response = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
-      messages: [{ role: "user", content: prompt }],
-    });
+    const ans = await model.generateContent(prompt);
+    let text = ans.response.text().trim();
 
-    const text = response.choices[0].message.content;
-    const result = JSON.parse(text);
+    // Clean any unwanted formatting if model adds markdown
+    text = text.replace(/```json|```/g, "").trim();
 
-    // Save to DB
+    let result;
+    try {
+      result = JSON.parse(text);
+    } catch (parseErr) {
+      console.error("Failed to parse AI response:", text);
+      throw new Error("Invalid JSON format returned by AI");
+    }
+
+    // Save optimized result to DB
     await db.query(
       `INSERT INTO asin_optimizations 
         (asin, original_title, original_bullets, original_description,
