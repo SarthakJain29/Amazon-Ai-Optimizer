@@ -78,18 +78,17 @@ DB_PORT=3306
 GEMINI_API_KEY=your_google_gemini_api_key
 PORT=5000
 ```
+Get Gemini api key from https://console.cloud.google.com/
 
 ### 4. Install Dependencies
 Backend:
 ```bash
-Copy code
 cd backend
 npm install
 ```
 
 Frontend:
 ```bash
-Copy code
 cd ../frontend
 npm install
 ```
