@@ -18,6 +18,10 @@ const safeParseArray = (str) => {
 
 // GET all optimization history
 router.get("/", async (req, res) => {
+  if (!db) {
+    return res.status(200).json([]); // return empty array if no DB
+  }
+  
   try {
     const [rows] = await db.query(
       "SELECT * FROM asin_optimizations ORDER BY created_at DESC"
