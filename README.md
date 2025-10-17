@@ -1,6 +1,6 @@
 # Amazon Product Listing Optimizer
 
-Demo Link:- https://drive.google.com/file/d/1-76rk91JmtIQwWX-4zgf-9jlZD_gl__i/view?usp=sharing
+Demo Link:- https://drive.google.com/file/d/1-76rk91JmtIQwWX-4zgf-9jlZD_gl__i/view?usp=sharing<br>
 Note:- Mysql db and api key must be setup for utilizing all functionalities, instructions given below
 
 ---
