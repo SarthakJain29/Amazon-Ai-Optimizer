@@ -19,6 +19,7 @@ router.get("/:asin", async (req, res) => {
     });
     const $ = cheerio.load(data);
 
+    //scraping required data
     const title = $("#productTitle").text().trim();
     const bullets = $("#feature-bullets li span")
       .map((i, el) => $(el).text().trim())

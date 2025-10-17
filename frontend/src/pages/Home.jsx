@@ -74,6 +74,7 @@ export default function Home() {
             disabled={loading}
             className="w-full flex items-center justify-center gap-2"
           >
+            {/*showing loader when fetching*/}
             {loading ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin" />

@@ -3,7 +3,7 @@ import { db } from "../db.js";
 
 const router = express.Router();
 
-// Utility to safely parse JSON, fallback to array
+// helper func to safely parse JSON
 const safeParseArray = (str) => {
   if (!str) return [];
   try {

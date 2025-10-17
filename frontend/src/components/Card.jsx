@@ -1,6 +1,5 @@
 export default function Card({ title, bullets = [], description, label, keywords = []}) {
 
-    //const bulletList = Array.isArray(bullets) ? bullets : bullets?.length ? bullets.split("\n") : [];
   return (
     <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-6 hover:shadow-xl transition-shadow duration-300">
       <div className="mb-4">

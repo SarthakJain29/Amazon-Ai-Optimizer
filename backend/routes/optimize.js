@@ -15,6 +15,7 @@ router.post("/", async (req, res) => {
     return res.status(400).json({ error: "Missing required fields" });
   }
   const bulletsArray = Array.isArray(bullets) ? bullets : bullets.split("\n");
+  //prompt for the AI mode;
   const prompt = `
 You are an Amazon product listing optimization expert.
 Given the following product details:
@@ -42,7 +43,7 @@ Example:
     const ans = await model.generateContent(prompt);
     let text = ans.response.text().trim();
 
-    // Clean any unwanted formatting if model adds markdown
+    // Clean any unwanted formatting
     text = text.replace(/```json|```/g, "").trim();
 
     let result;
