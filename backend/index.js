@@ -8,9 +8,7 @@ import historyRoutes from "./routes/history.js";
 const app = express();
 
 //middlewares
-app.use(cors({
-  origin: 'http://localhost:5173'
-}));
+app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
 
